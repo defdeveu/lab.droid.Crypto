@@ -1,6 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Crypto</string>
-    <string name="encypt">Encypt</string>
-    <string name="encypted_text">Encypted text</string>
-    <string name="plain_text">Plain text</string>
+    <string name="exercise_title">Protect a message</string>
+    <string name="exercise_supporting">Encrypt a message, read the result, then decrypt it again.</string>
+    <string name="comparison_title">Compare implementations</string>
+    <string name="comparison_supporting">The same message encrypted by two implementations.</string>
+    <string name="section_message">Message</string>
+    <string name="section_ciphertext">Ciphertext</string>
+    <string name="section_plaintext">Plaintext</string>
+    <string name="section_fixed_key">Fixed key</string>
+    <string name="section_device_key">Device key</string>
+    <string name="action_encrypt">Encrypt</string>
+    <string name="action_decrypt">Decrypt</string>
+    <string name="action_compare">Compare</string>
+    <string name="action_open_comparison">Compare implementations</string>
+    <string name="action_back">Back</string>
+    <string name="placeholder_ciphertext">No ciphertext yet.</string>
+    <string name="placeholder_plaintext">No plaintext yet.</string>
+    <string name="placeholder_fixed_key">Not computed yet.</string>
+    <string name="placeholder_device_key">Not computed yet.</string>
+    <string name="error_empty_input">Enter a message first.</string>
+    <string name="error_invalid_hex">The ciphertext is not valid hexadecimal.</string>
+    <string name="error_key_unavailable">The device key is unavailable.</string>
+    <string name="error_operation_failed">The operation failed.</string>
 </resources>
