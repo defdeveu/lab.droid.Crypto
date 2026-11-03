@@ -126,6 +126,36 @@ class CryptoViewModelTest {
         assertEquals(CryptoError.EMPTY_INPUT, viewModel.uiState.value.error)
     }
 
+    @Test
+    fun unfinishedOperationsReportNotImplemented() = runTest(dispatcher) {
+        val viewModel = CryptoViewModel(null, dispatcher)
+
+        viewModel.encrypt()
+        assertEquals(CryptoError.NOT_IMPLEMENTED, viewModel.uiState.value.error)
+        assertEquals(CryptoOperation.ENCRYPT, viewModel.uiState.value.operation)
+
+        viewModel.decrypt()
+        assertEquals(CryptoError.NOT_IMPLEMENTED, viewModel.uiState.value.error)
+        assertEquals(CryptoOperation.DECRYPT, viewModel.uiState.value.operation)
+        assertFalse(viewModel.uiState.value.isRunning)
+    }
+
+    @Test
+    fun encryptClearsThePreviousDecryptedText() = runTest(dispatcher) {
+        val viewModel = CryptoViewModel(FakeCryptoService(), dispatcher)
+        viewModel.onCiphertextChange("0011")
+        viewModel.decrypt()
+        advanceUntilIdle()
+        assertEquals("dec:0011", viewModel.uiState.value.decrypted)
+
+        viewModel.onPlaintextChange("new message")
+        viewModel.encrypt()
+        advanceUntilIdle()
+
+        assertEquals("", viewModel.uiState.value.decrypted)
+        assertEquals("enc:new message", viewModel.uiState.value.ciphertext)
+    }
+
     private class FakeCryptoService(var failure: CryptoError? = null) : CryptoService {
         var encryptCalls = 0
             private set

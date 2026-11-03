@@ -2,7 +2,6 @@ package defdev.labdroid.crypto.flows.hardcoded
 
 import defdev.labdroid.crypto.crypto.CryptoService
 import defdev.labdroid.crypto.crypto.HexCodec
-
 import defdev.labdroid.crypto.error.CryptoError
 import defdev.labdroid.crypto.error.CryptoFailure
 import java.security.GeneralSecurityException
@@ -29,7 +28,7 @@ class HardcodedFlow : CryptoService {
         }
 
     companion object {
-        const val KEY = "Bar12345Bar12345"
+        const val KEY = "0123456789abcdef0123456789abcde1"
         private const val ALGORITHM = "AES"
         private const val TRANSFORMATION = "AES/ECB/PKCS5PADDING"
     }

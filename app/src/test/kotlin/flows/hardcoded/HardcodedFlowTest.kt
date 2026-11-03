@@ -10,6 +10,11 @@ class HardcodedFlowTest {
     private val service = HardcodedFlow()
 
     @Test
+    fun encryptMatchesKnownValue() {
+        assertEquals("5f63e0723c198f7ddc73aff3d023bdb0", service.encrypt("Demo message"))
+    }
+
+    @Test
     fun decryptReversesEncrypt() {
         val plaintext = "development security"
         assertEquals(plaintext, service.decrypt(service.encrypt(plaintext)))

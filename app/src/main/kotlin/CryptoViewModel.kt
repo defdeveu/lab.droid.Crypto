@@ -2,9 +2,9 @@ package defdev.labdroid.crypto
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import defdev.labdroid.crypto.crypto.CryptoService
 import defdev.labdroid.crypto.error.CryptoError
 import defdev.labdroid.crypto.error.CryptoFailure
-import defdev.labdroid.crypto.crypto.CryptoService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,16 +13,22 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+enum class CryptoOperation {
+    ENCRYPT,
+    DECRYPT,
+}
+
 data class CryptoUiState(
     val plaintext: String = "",
     val ciphertext: String = "",
     val decrypted: String = "",
     val isRunning: Boolean = false,
+    val operation: CryptoOperation? = null,
     val error: CryptoError? = null,
 )
 
 class CryptoViewModel(
-    private val crypto: CryptoService,
+    private val crypto: CryptoService?,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : ViewModel() {
     private val mutableUiState = MutableStateFlow(CryptoUiState())
@@ -34,22 +40,31 @@ class CryptoViewModel(
     }
 
     fun onCiphertextChange(value: String) {
-        mutableUiState.update { it.copy(ciphertext = value) }
+        mutableUiState.update { it.copy(ciphertext = value, decrypted = "") }
     }
 
     fun encrypt() {
         if (mutableUiState.value.isRunning) {
             return
         }
-        val plaintext = mutableUiState.value.plaintext
-        if (plaintext.isEmpty()) {
-            mutableUiState.update { it.copy(error = CryptoError.EMPTY_INPUT, ciphertext = "") }
+        val service = crypto
+        if (service == null) {
+            mutableUiState.update { it.copy(operation = CryptoOperation.ENCRYPT, error = CryptoError.NOT_IMPLEMENTED) }
             return
         }
-        mutableUiState.update { it.copy(isRunning = true, error = null) }
+        val plaintext = mutableUiState.value.plaintext
+        if (plaintext.isEmpty()) {
+            mutableUiState.update {
+                it.copy(operation = CryptoOperation.ENCRYPT, error = CryptoError.EMPTY_INPUT, ciphertext = "", decrypted = "")
+            }
+            return
+        }
+        mutableUiState.update {
+            it.copy(isRunning = true, operation = CryptoOperation.ENCRYPT, error = null, decrypted = "")
+        }
         viewModelScope.launch(dispatcher) {
             try {
-                val ciphertext = crypto.encrypt(plaintext)
+                val ciphertext = service.encrypt(plaintext)
                 mutableUiState.update { it.copy(isRunning = false, ciphertext = ciphertext) }
             } catch (failure: CryptoFailure) {
                 mutableUiState.update {
@@ -63,15 +78,20 @@ class CryptoViewModel(
         if (mutableUiState.value.isRunning) {
             return
         }
-        val ciphertext = mutableUiState.value.ciphertext
-        if (ciphertext.isEmpty()) {
-            mutableUiState.update { it.copy(error = CryptoError.EMPTY_INPUT, decrypted = "") }
+        val service = crypto
+        if (service == null) {
+            mutableUiState.update { it.copy(operation = CryptoOperation.DECRYPT, error = CryptoError.NOT_IMPLEMENTED) }
             return
         }
-        mutableUiState.update { it.copy(isRunning = true, error = null) }
+        val ciphertext = mutableUiState.value.ciphertext
+        if (ciphertext.isEmpty()) {
+            mutableUiState.update { it.copy(operation = CryptoOperation.DECRYPT, error = CryptoError.EMPTY_INPUT, decrypted = "") }
+            return
+        }
+        mutableUiState.update { it.copy(isRunning = true, operation = CryptoOperation.DECRYPT, error = null) }
         viewModelScope.launch(dispatcher) {
             try {
-                val plaintext = crypto.decrypt(ciphertext)
+                val plaintext = service.decrypt(ciphertext)
                 mutableUiState.update { it.copy(isRunning = false, decrypted = plaintext) }
             } catch (failure: CryptoFailure) {
                 mutableUiState.update {

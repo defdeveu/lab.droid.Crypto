@@ -17,19 +17,14 @@ class CryptoScreenTest {
 
     @Test
     fun exerciseScreenShowsTheMessageSection() {
-        composeRule
-            .onNodeWithText(text(R.string.section_message))
-            .assertIsDisplayed()
+        composeRule.onNodeWithText(text(R.string.section_message)).assertIsDisplayed()
     }
 
     @Test
-    fun comparisonScreenOpensFromTheExerciseScreen() {
-        composeRule
-            .onNodeWithText(text(R.string.action_open_comparison))
-            .performClick()
-
-        composeRule
-            .onNodeWithText(text(R.string.section_fixed_key))
-            .assertIsDisplayed()
+    fun resourceCaseReportsNotImplemented() {
+        composeRule.onNodeWithText("2").performClick()
+        composeRule.onNodeWithText(text(R.string.flow_resource_title)).assertIsDisplayed()
+        composeRule.onNodeWithText(text(R.string.action_encrypt)).performClick()
+        composeRule.onNodeWithText(text(R.string.operation_not_implemented)).assertIsDisplayed()
     }
 }

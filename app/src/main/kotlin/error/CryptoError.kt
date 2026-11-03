@@ -5,4 +5,5 @@ enum class CryptoError {
     INVALID_HEX,
     KEY_UNAVAILABLE,
     OPERATION_FAILED,
+    NOT_IMPLEMENTED,
 }
