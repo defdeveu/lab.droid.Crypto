@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Crypto</string>
+    <string name="app_name">Crypto Lab</string>
     <string name="exercise_title">Protect a message</string>
     <string name="exercise_supporting">Encrypt a message, read the result, then decrypt it again.</string>
-    <string name="comparison_title">Compare implementations</string>
+    <string name="comparison_title">Compare Implementations</string>
     <string name="comparison_supporting">The same message encrypted by two implementations.</string>
     <string name="section_message">Message</string>
     <string name="section_ciphertext">Ciphertext</string>
@@ -15,6 +15,7 @@
     <string name="action_compare">Compare</string>
     <string name="action_open_comparison">Compare implementations</string>
     <string name="action_back">Back</string>
+    <string name="operation_working">Working…</string>
     <string name="placeholder_ciphertext">No ciphertext yet.</string>
     <string name="placeholder_plaintext">No plaintext yet.</string>
     <string name="placeholder_fixed_key">Not computed yet.</string>

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.def.lab.droid.crypto"
+    namespace = "defdev.labdroid.crypto"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "dev.def.lab.droid.crypto"
+        applicationId = "defdev.labdroid.crypto"
         minSdk = 24
         targetSdk = 37
         versionCode = 1
