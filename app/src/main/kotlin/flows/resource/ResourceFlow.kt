@@ -16,10 +16,10 @@ class ResourceFlow(private val resources: Resources) : CryptoService {
     override val keyValue: String
         get() = keyBytes.toString(Charsets.UTF_8)
 
-    override fun encrypt(plaintext: String): String =
+    override suspend fun encrypt(plaintext: String): String =
         AesEcbCipher.encrypt(plaintext, key)
 
-    override fun decrypt(ciphertext: String): String =
+    override suspend fun decrypt(ciphertext: String): String =
         AesEcbCipher.decrypt(ciphertext, key)
 
     private fun readKey(): ByteArray =

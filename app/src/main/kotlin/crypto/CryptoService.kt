@@ -4,7 +4,9 @@ interface CryptoService {
     val keyValue: String?
         get() = null
 
-    fun encrypt(plaintext: String): String
+    suspend fun keySecurity(): KeySecurity? = null
 
-    fun decrypt(ciphertext: String): String
+    suspend fun encrypt(plaintext: String): String
+
+    suspend fun decrypt(ciphertext: String): String
 }

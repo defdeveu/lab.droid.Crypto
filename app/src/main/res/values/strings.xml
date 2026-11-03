@@ -29,6 +29,14 @@
     <string name="key_not_available">Not available yet</string>
     <string name="key_not_fetched">Not fetched yet</string>
     <string name="key_non_exportable">Non-exportable</string>
+    <string name="key_protected_details">Non-exportable\nKey security: %1$s\nInside secure hardware: %2$s</string>
+    <string name="key_security_software">Software</string>
+    <string name="key_security_tee">TEE</string>
+    <string name="key_security_strongbox">StrongBox</string>
+    <string name="key_security_hardware">Hardware-backed</string>
+    <string name="key_security_unknown">Unknown</string>
+    <string name="value_yes">Yes</string>
+    <string name="value_no">No</string>
     <string name="error_empty_input">Enter a message first.</string>
     <string name="error_invalid_hex">The ciphertext is not valid hexadecimal.</string>
     <string name="error_key_unavailable">The encryption key is unavailable.</string>

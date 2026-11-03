@@ -1,6 +1,7 @@
 package defdev.labdroid.crypto
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
@@ -46,5 +47,27 @@ class CryptoScreenTest {
         composeRule.onNodeWithText(text(R.string.flow_https_title)).assertIsDisplayed()
         composeRule.onNodeWithText(text(R.string.action_encrypt)).performClick()
         composeRule.onNodeWithText(text(R.string.operation_not_implemented)).assertIsDisplayed()
+    }
+
+    @Test
+    fun keystoreCaseEncryptsAndDecrypts() {
+        composeRule.onNodeWithText("4").performClick()
+        composeRule.onNodeWithText(text(R.string.flow_keystore_title)).assertIsDisplayed()
+        composeRule.onNode(hasText(text(R.string.section_message)) and hasSetTextAction())
+            .performTextInput("Demo message")
+        composeRule.onNodeWithText(text(R.string.action_encrypt)).performScrollTo().performClick()
+        composeRule.waitUntil(timeoutMillis = 10_000) {
+            composeRule.onNode(hasText(text(R.string.section_ciphertext)) and hasSetTextAction())
+                .fetchSemanticsNode().config[SemanticsProperties.EditableText].text.length == 80
+        }
+        composeRule.onNodeWithText(text(R.string.action_decrypt)).performScrollTo().performClick()
+        composeRule.waitUntil(timeoutMillis = 10_000) {
+            composeRule.onAllNodes(hasText("Demo message") and !hasSetTextAction())
+                .fetchSemanticsNodes().isNotEmpty()
+        }
+        composeRule.onNode(hasText("Demo message") and !hasSetTextAction())
+            .performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText(text(R.string.key_non_exportable), substring = true)
+            .performScrollTo().assertIsDisplayed()
     }
 }

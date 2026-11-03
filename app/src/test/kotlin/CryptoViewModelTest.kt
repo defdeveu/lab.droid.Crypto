@@ -174,19 +174,41 @@ class CryptoViewModelTest {
         assertEquals("decryption key", viewModel.uiState.value.keyValue)
     }
 
+    @Test
+    fun unavailableKeyPreservesTheMessageAndCiphertext() = runTest(dispatcher) {
+        val viewModel = CryptoViewModel(FakeCryptoService(CryptoError.KEY_UNAVAILABLE), dispatcher)
+        viewModel.onPlaintextChange("hello")
+        viewModel.onCiphertextChange("0011")
+
+        viewModel.encrypt()
+        advanceUntilIdle()
+
+        assertEquals(CryptoError.KEY_UNAVAILABLE, viewModel.uiState.value.error)
+        assertEquals("hello", viewModel.uiState.value.plaintext)
+        assertEquals("0011", viewModel.uiState.value.ciphertext)
+        assertFalse(viewModel.uiState.value.isRunning)
+
+        viewModel.decrypt()
+        advanceUntilIdle()
+
+        assertEquals(CryptoError.KEY_UNAVAILABLE, viewModel.uiState.value.error)
+        assertEquals("0011", viewModel.uiState.value.ciphertext)
+        assertEquals("", viewModel.uiState.value.decrypted)
+    }
+
     private class FakeCryptoService(var failure: CryptoError? = null) : CryptoService {
         override var keyValue: String? = null
 
         var encryptCalls = 0
             private set
 
-        override fun encrypt(plaintext: String): String {
+        override suspend fun encrypt(plaintext: String): String {
             encryptCalls++
             failure?.let { throw CryptoFailure(it) }
             return "enc:$plaintext"
         }
 
-        override fun decrypt(ciphertext: String): String {
+        override suspend fun decrypt(ciphertext: String): String {
             failure?.let { throw CryptoFailure(it) }
             return "dec:$ciphertext"
         }

@@ -3,6 +3,7 @@ package defdev.labdroid.crypto
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import defdev.labdroid.crypto.crypto.CryptoService
+import defdev.labdroid.crypto.crypto.KeySecurity
 import defdev.labdroid.crypto.error.CryptoError
 import defdev.labdroid.crypto.error.CryptoFailure
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,6 +24,7 @@ data class CryptoUiState(
     val ciphertext: String = "",
     val decrypted: String = "",
     val keyValue: String = "",
+    val keySecurity: KeySecurity? = null,
     val isRunning: Boolean = false,
     val operation: CryptoOperation? = null,
     val error: CryptoError? = null,
@@ -35,6 +37,17 @@ class CryptoViewModel(
     private val mutableUiState = MutableStateFlow(CryptoUiState(keyValue = readKeyValue()))
 
     val uiState: StateFlow<CryptoUiState> = mutableUiState.asStateFlow()
+
+    init {
+        viewModelScope.launch(dispatcher) {
+            try {
+                val security = crypto?.keySecurity()
+                mutableUiState.update { it.copy(keySecurity = security) }
+            } catch (failure: CryptoFailure) {
+                mutableUiState.update { it.copy(error = failure.reason) }
+            }
+        }
+    }
 
     private fun readKeyValue(): String =
         try {
@@ -76,7 +89,11 @@ class CryptoViewModel(
                 mutableUiState.update { it.copy(isRunning = false, ciphertext = ciphertext, keyValue = readKeyValue()) }
             } catch (failure: CryptoFailure) {
                 mutableUiState.update {
-                    it.copy(isRunning = false, error = failure.reason, ciphertext = "")
+                    it.copy(
+                        isRunning = false,
+                        error = failure.reason,
+                        ciphertext = if (failure.reason == CryptoError.KEY_UNAVAILABLE) it.ciphertext else "",
+                    )
                 }
             }
         }

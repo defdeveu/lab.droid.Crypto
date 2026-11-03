@@ -10,10 +10,10 @@ class HardcodedFlow : CryptoService {
     override val keyValue: String
         get() = KEY
 
-    override fun encrypt(plaintext: String): String =
+    override suspend fun encrypt(plaintext: String): String =
         AesEcbCipher.encrypt(plaintext, key)
 
-    override fun decrypt(ciphertext: String): String =
+    override suspend fun decrypt(ciphertext: String): String =
         AesEcbCipher.decrypt(ciphertext, key)
 
     companion object {

@@ -34,6 +34,7 @@ import defdev.labdroid.crypto.CryptoOperation
 import defdev.labdroid.crypto.CryptoViewModel
 import defdev.labdroid.crypto.R
 import defdev.labdroid.crypto.error.CryptoError
+import defdev.labdroid.crypto.crypto.KeySecurity
 import defdev.labdroid.crypto.flows.FlowId
 
 @Composable
@@ -156,7 +157,8 @@ fun CryptoScreen(
                             text = when (selectedFlow) {
                                 FlowId.HARDCODED, FlowId.RESOURCE -> state.keyValue
                                 FlowId.HTTPS -> stringResource(R.string.key_not_fetched)
-                                FlowId.KEYSTORE, FlowId.BIOMETRIC -> stringResource(R.string.key_non_exportable)
+                                FlowId.KEYSTORE -> protectedKeyText(state.keySecurity, state.error)
+                                FlowId.BIOMETRIC -> stringResource(R.string.key_non_exportable)
                             },
                             placeholder = stringResource(R.string.key_not_available),
                         )
@@ -165,6 +167,29 @@ fun CryptoScreen(
             }
         }
     }
+}
+
+@Composable
+private fun protectedKeyText(security: KeySecurity?, error: CryptoError?): String {
+    if (error == CryptoError.KEY_UNAVAILABLE) {
+        return stringResource(R.string.error_key_unavailable)
+    }
+    if (security == null) {
+        return stringResource(R.string.key_non_exportable)
+    }
+    val level = when (security) {
+        KeySecurity.SOFTWARE -> R.string.key_security_software
+        KeySecurity.TEE -> R.string.key_security_tee
+        KeySecurity.STRONGBOX -> R.string.key_security_strongbox
+        KeySecurity.HARDWARE -> R.string.key_security_hardware
+        KeySecurity.UNKNOWN -> R.string.key_security_unknown
+    }
+    val insideHardware = when (security) {
+        KeySecurity.SOFTWARE -> R.string.value_no
+        KeySecurity.TEE, KeySecurity.STRONGBOX, KeySecurity.HARDWARE -> R.string.value_yes
+        KeySecurity.UNKNOWN -> R.string.key_security_unknown
+    }
+    return stringResource(R.string.key_protected_details, stringResource(level), stringResource(insideHardware))
 }
 
 @StringRes
