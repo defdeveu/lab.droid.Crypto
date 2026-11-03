@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyInfo
 import android.security.keystore.KeyProperties
 import android.security.keystore.StrongBoxUnavailableException
 import defdev.labdroid.crypto.crypto.KeySecurity
+import defdev.labdroid.crypto.crypto.KeystoreMetadata
 import defdev.labdroid.crypto.error.CryptoError
 import defdev.labdroid.crypto.error.CryptoFailure
 import java.io.IOException
@@ -16,7 +16,6 @@ import java.security.KeyStore
 import java.security.ProviderException
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
-import javax.crypto.SecretKeyFactory
 
 class KeystoreKey(private val context: Context) {
     private val preferences = context.getSharedPreferences("keystore_provisioning", Context.MODE_PRIVATE)
@@ -47,22 +46,8 @@ class KeystoreKey(private val context: Context) {
         }
     }
 
-    @Suppress("DEPRECATION")
     fun security(): KeySecurity = protect {
-        val info = keyInfo(loadExisting())
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            when (info.securityLevel) {
-                KeyProperties.SECURITY_LEVEL_SOFTWARE -> KeySecurity.SOFTWARE
-                KeyProperties.SECURITY_LEVEL_TRUSTED_ENVIRONMENT -> KeySecurity.TEE
-                KeyProperties.SECURITY_LEVEL_STRONGBOX -> KeySecurity.STRONGBOX
-                KeyProperties.SECURITY_LEVEL_UNKNOWN_SECURE -> KeySecurity.HARDWARE
-                else -> KeySecurity.UNKNOWN
-            }
-        } else if (info.isInsideSecureHardware) {
-            KeySecurity.HARDWARE
-        } else {
-            KeySecurity.SOFTWARE
-        }
+        KeystoreMetadata.security(loadExisting())
     }
 
     private fun openStore(): KeyStore = KeyStore.getInstance(PROVIDER).apply { load(null) }
@@ -70,12 +55,8 @@ class KeystoreKey(private val context: Context) {
     private fun readKey(store: KeyStore): SecretKey =
         store.getKey(ALIAS, null) as? SecretKey ?: throw CryptoFailure(CryptoError.KEY_UNAVAILABLE)
 
-    private fun keyInfo(key: SecretKey): KeyInfo =
-        SecretKeyFactory.getInstance(KeyProperties.KEY_ALGORITHM_AES, PROVIDER)
-            .getKeySpec(key, KeyInfo::class.java) as KeyInfo
-
     private fun validate(key: SecretKey) {
-        val info = keyInfo(key)
+        val info = KeystoreMetadata.info(key)
         if (key.algorithm != KeyProperties.KEY_ALGORITHM_AES || key.encoded != null ||
             info.keySize != 256 || info.origin != KeyProperties.ORIGIN_GENERATED ||
             info.purposes != PURPOSES || info.isUserAuthenticationRequired ||

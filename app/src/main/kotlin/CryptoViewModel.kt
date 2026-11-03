@@ -92,7 +92,10 @@ class CryptoViewModel(
                     it.copy(
                         isRunning = false,
                         error = failure.reason,
-                        ciphertext = if (failure.reason == CryptoError.KEY_UNAVAILABLE) it.ciphertext else "",
+                        ciphertext = when (failure.reason) {
+                            CryptoError.OPERATION_FAILED, CryptoError.INVALID_HEX, CryptoError.EMPTY_INPUT -> ""
+                            else -> it.ciphertext
+                        },
                     )
                 }
             }

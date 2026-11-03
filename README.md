@@ -1,8 +1,7 @@
 # Crypto
 
 Android teaching app for the "Development security in Android" course. It
-encrypts and decrypts a message, and shows two encryption implementations
-side by side.
+encrypts and decrypts a message through numbered exercise cases.
 
 ## Requirements
 
@@ -22,10 +21,10 @@ Or open the project in Android Studio and run the `app` configuration.
 
 ## What the app does
 
-- The first screen encrypts a message, shows the ciphertext, and decrypts a
-  ciphertext back into plaintext. Ciphertext is lowercase hexadecimal.
-- The second screen encrypts the same message with two implementations and
-  shows both results.
+- Select a case from the numbered rail, enter a message, then use Encrypt
+  and Decrypt. Ciphertext is editable lowercase hexadecimal.
+- The biometric case requests authentication separately for each operation.
+  Device setup instructions are in [MANUAL.md](MANUAL.md).
 
 ## Tests
 
@@ -33,6 +32,6 @@ Or open the project in Android Studio and run the `app` configuration.
 ./gradlew testDebugUnitTest
 ```
 
-The unit tests cover the encryption services, the hexadecimal codec, and both
-view models. Instrumented Compose tests live under `app/src/androidTest` and
+The unit tests cover the encryption services, hexadecimal codec, operation
+state and authentication request handling. Instrumented Compose tests live under `app/src/androidTest` and
 need a running device or emulator.

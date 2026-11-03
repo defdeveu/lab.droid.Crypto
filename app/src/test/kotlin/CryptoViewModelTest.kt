@@ -196,6 +196,21 @@ class CryptoViewModelTest {
         assertEquals("", viewModel.uiState.value.decrypted)
     }
 
+    @Test
+    fun cancelledAuthenticationPreservesTheMessageAndCiphertext() = runTest(dispatcher) {
+        val viewModel = CryptoViewModel(FakeCryptoService(CryptoError.AUTHENTICATION_CANCELLED), dispatcher)
+        viewModel.onPlaintextChange("hello")
+        viewModel.onCiphertextChange("0011")
+
+        viewModel.encrypt()
+        advanceUntilIdle()
+
+        assertEquals(CryptoError.AUTHENTICATION_CANCELLED, viewModel.uiState.value.error)
+        assertEquals("hello", viewModel.uiState.value.plaintext)
+        assertEquals("0011", viewModel.uiState.value.ciphertext)
+        assertFalse(viewModel.uiState.value.isRunning)
+    }
+
     private class FakeCryptoService(var failure: CryptoError? = null) : CryptoService {
         override var keyValue: String? = null
 

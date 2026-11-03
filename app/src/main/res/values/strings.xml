@@ -20,6 +20,15 @@
     <string name="section_key">Key</string>
     <string name="action_encrypt">Encrypt</string>
     <string name="action_decrypt">Decrypt</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="authentication_encrypt_title">Encrypt message</string>
+    <string name="authentication_decrypt_title">Decrypt message</string>
+    <string name="authentication_subtitle">Authenticate to use the Biometric Keystore key.</string>
+    <string name="authentication_cancelled">Authentication cancelled.</string>
+    <string name="error_biometric_not_enrolled">Set up a screen lock and enroll a strong biometric in Android Settings, then restart this app.</string>
+    <string name="error_biometric_unavailable">Strong biometric authentication is unavailable.</string>
+    <string name="error_biometric_locked_out">Biometric authentication is locked. Unlock the device with its screen lock, then try again.</string>
+    <string name="error_authentication_failed">Biometric authentication could not be completed.</string>
     <string name="operation_working">Working…</string>
     <string name="operation_encrypting">Encrypting…</string>
     <string name="operation_decrypting">Decrypting…</string>

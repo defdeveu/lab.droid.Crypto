@@ -151,7 +151,7 @@ fun OperationFeedback(isRunning: Boolean, error: CryptoError?) {
         Text(
             text = stringResource(error.messageRes()),
             style = MaterialTheme.typography.bodyMedium,
-            color = if (error == CryptoError.NOT_IMPLEMENTED) {
+            color = if (error == CryptoError.NOT_IMPLEMENTED || error == CryptoError.AUTHENTICATION_CANCELLED) {
                 MaterialTheme.colorScheme.onSurfaceVariant
             } else MaterialTheme.colorScheme.error,
         )

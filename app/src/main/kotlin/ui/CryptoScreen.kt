@@ -103,6 +103,9 @@ fun CryptoScreen(
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
+                            if (selectedFlow == FlowId.BIOMETRIC && state.operation == null && state.error != null) {
+                                OperationFeedback(isRunning = false, error = state.error)
+                            }
                         }
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             MessageField(
@@ -157,8 +160,7 @@ fun CryptoScreen(
                             text = when (selectedFlow) {
                                 FlowId.HARDCODED, FlowId.RESOURCE -> state.keyValue
                                 FlowId.HTTPS -> stringResource(R.string.key_not_fetched)
-                                FlowId.KEYSTORE -> protectedKeyText(state.keySecurity, state.error)
-                                FlowId.BIOMETRIC -> stringResource(R.string.key_non_exportable)
+                                FlowId.KEYSTORE, FlowId.BIOMETRIC -> protectedKeyText(state.keySecurity, state.error)
                             },
                             placeholder = stringResource(R.string.key_not_available),
                         )
@@ -175,6 +177,9 @@ private fun protectedKeyText(security: KeySecurity?, error: CryptoError?): Strin
         return stringResource(R.string.error_key_unavailable)
     }
     if (security == null) {
+        if (error == CryptoError.BIOMETRIC_NOT_ENROLLED || error == CryptoError.BIOMETRIC_UNAVAILABLE) {
+            return stringResource(R.string.key_not_available)
+        }
         return stringResource(R.string.key_non_exportable)
     }
     val level = when (security) {
@@ -217,4 +222,9 @@ internal fun CryptoError.messageRes(): Int = when (this) {
     CryptoError.KEY_UNAVAILABLE -> R.string.error_key_unavailable
     CryptoError.OPERATION_FAILED -> R.string.error_operation_failed
     CryptoError.NOT_IMPLEMENTED -> R.string.operation_not_implemented
+    CryptoError.BIOMETRIC_NOT_ENROLLED -> R.string.error_biometric_not_enrolled
+    CryptoError.BIOMETRIC_UNAVAILABLE -> R.string.error_biometric_unavailable
+    CryptoError.BIOMETRIC_LOCKED_OUT -> R.string.error_biometric_locked_out
+    CryptoError.AUTHENTICATION_CANCELLED -> R.string.authentication_cancelled
+    CryptoError.AUTHENTICATION_FAILED -> R.string.error_authentication_failed
 }
