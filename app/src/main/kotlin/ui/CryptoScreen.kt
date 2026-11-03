@@ -35,7 +35,6 @@ import defdev.labdroid.crypto.CryptoViewModel
 import defdev.labdroid.crypto.R
 import defdev.labdroid.crypto.error.CryptoError
 import defdev.labdroid.crypto.flows.FlowId
-import defdev.labdroid.crypto.flows.hardcoded.HardcodedFlow
 
 @Composable
 fun CryptoScreen(
@@ -155,8 +154,7 @@ fun CryptoScreen(
                         OutputField(
                             title = stringResource(R.string.section_key),
                             text = when (selectedFlow) {
-                                FlowId.HARDCODED -> HardcodedFlow.KEY
-                                FlowId.RESOURCE -> ""
+                                FlowId.HARDCODED, FlowId.RESOURCE -> state.keyValue
                                 FlowId.HTTPS -> stringResource(R.string.key_not_fetched)
                                 FlowId.KEYSTORE, FlowId.BIOMETRIC -> stringResource(R.string.key_non_exportable)
                             },

@@ -9,10 +9,9 @@ import androidx.activity.enableEdgeToEdge
 import defdev.labdroid.crypto.theme.CryptoLabTheme
 
 class MainActivity : ComponentActivity() {
-    private val container = AppContainer()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val container = AppContainer(application.resources)
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),

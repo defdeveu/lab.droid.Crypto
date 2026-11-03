@@ -156,7 +156,27 @@ class CryptoViewModelTest {
         assertEquals("enc:new message", viewModel.uiState.value.ciphertext)
     }
 
+    @Test
+    fun keyValueFollowsTheActiveService() = runTest(dispatcher) {
+        val service = FakeCryptoService().apply { keyValue = "initial" }
+        val viewModel = CryptoViewModel(service, dispatcher)
+        assertEquals("initial", viewModel.uiState.value.keyValue)
+
+        service.keyValue = "encryption key"
+        viewModel.onPlaintextChange("hello")
+        viewModel.encrypt()
+        advanceUntilIdle()
+        assertEquals("encryption key", viewModel.uiState.value.keyValue)
+
+        service.keyValue = "decryption key"
+        viewModel.decrypt()
+        advanceUntilIdle()
+        assertEquals("decryption key", viewModel.uiState.value.keyValue)
+    }
+
     private class FakeCryptoService(var failure: CryptoError? = null) : CryptoService {
+        override var keyValue: String? = null
+
         var encryptCalls = 0
             private set
 

@@ -22,6 +22,7 @@ data class CryptoUiState(
     val plaintext: String = "",
     val ciphertext: String = "",
     val decrypted: String = "",
+    val keyValue: String = "",
     val isRunning: Boolean = false,
     val operation: CryptoOperation? = null,
     val error: CryptoError? = null,
@@ -31,9 +32,16 @@ class CryptoViewModel(
     private val crypto: CryptoService?,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : ViewModel() {
-    private val mutableUiState = MutableStateFlow(CryptoUiState())
+    private val mutableUiState = MutableStateFlow(CryptoUiState(keyValue = readKeyValue()))
 
     val uiState: StateFlow<CryptoUiState> = mutableUiState.asStateFlow()
+
+    private fun readKeyValue(): String =
+        try {
+            crypto?.keyValue.orEmpty()
+        } catch (_: CryptoFailure) {
+            ""
+        }
 
     fun onPlaintextChange(value: String) {
         mutableUiState.update { it.copy(plaintext = value) }
@@ -65,7 +73,7 @@ class CryptoViewModel(
         viewModelScope.launch(dispatcher) {
             try {
                 val ciphertext = service.encrypt(plaintext)
-                mutableUiState.update { it.copy(isRunning = false, ciphertext = ciphertext) }
+                mutableUiState.update { it.copy(isRunning = false, ciphertext = ciphertext, keyValue = readKeyValue()) }
             } catch (failure: CryptoFailure) {
                 mutableUiState.update {
                     it.copy(isRunning = false, error = failure.reason, ciphertext = "")
@@ -92,7 +100,7 @@ class CryptoViewModel(
         viewModelScope.launch(dispatcher) {
             try {
                 val plaintext = service.decrypt(ciphertext)
-                mutableUiState.update { it.copy(isRunning = false, decrypted = plaintext) }
+                mutableUiState.update { it.copy(isRunning = false, decrypted = plaintext, keyValue = readKeyValue()) }
             } catch (failure: CryptoFailure) {
                 mutableUiState.update {
                     it.copy(isRunning = false, error = failure.reason, decrypted = "")
