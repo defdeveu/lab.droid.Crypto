@@ -4,9 +4,8 @@ import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.font.FontFamily
 
-private val LabTypography = Typography(fontFamily = FontFamily.Default).let { scale ->
+private val LabTypography = Typography(fontFamily = LabSans).let { scale ->
     scale.copy(
         displayLarge = scale.displayLargeEmphasized,
         displayMedium = scale.displayMediumEmphasized,

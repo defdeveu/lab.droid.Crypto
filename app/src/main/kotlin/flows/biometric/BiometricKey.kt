@@ -2,7 +2,6 @@ package defdev.labdroid.crypto.flows.biometric
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.security.keystore.StrongBoxUnavailableException
@@ -74,17 +73,14 @@ class BiometricKey(private val context: Context) {
             info.userAuthenticationValidityDurationSeconds > 0 || !info.isInvalidatedByBiometricEnrollment ||
             info.blockModes.toSet() != setOf(KeyProperties.BLOCK_MODE_GCM) ||
             info.encryptionPaddings.toSet() != setOf(KeyProperties.ENCRYPTION_PADDING_NONE) ||
-            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
-                info.userAuthenticationType != KeyProperties.AUTH_BIOMETRIC_STRONG)
+            info.userAuthenticationType != KeyProperties.AUTH_BIOMETRIC_STRONG
         ) {
             throw CryptoFailure(CryptoError.KEY_UNAVAILABLE)
         }
     }
 
     private fun createKey(store: KeyStore): SecretKey {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
-            context.packageManager.hasSystemFeature(PackageManager.FEATURE_STRONGBOX_KEYSTORE)
-        ) {
+        if (context.packageManager.hasSystemFeature(PackageManager.FEATURE_STRONGBOX_KEYSTORE)) {
             try {
                 return generate(strongBox = true)
             } catch (_: StrongBoxUnavailableException) {
@@ -96,7 +92,6 @@ class BiometricKey(private val context: Context) {
         return generate(strongBox = false)
     }
 
-    @Suppress("DEPRECATION")
     private fun generate(strongBox: Boolean): SecretKey {
         val builder = KeyGenParameterSpec.Builder(ALIAS, PURPOSES)
             .setKeySize(256)
@@ -105,14 +100,8 @@ class BiometricKey(private val context: Context) {
             .setRandomizedEncryptionRequired(true)
             .setUserAuthenticationRequired(true)
             .setInvalidatedByBiometricEnrollment(true)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            builder.setUserAuthenticationParameters(0, KeyProperties.AUTH_BIOMETRIC_STRONG)
-        } else {
-            builder.setUserAuthenticationValidityDurationSeconds(-1)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            builder.setIsStrongBoxBacked(strongBox)
-        }
+            .setUserAuthenticationParameters(0, KeyProperties.AUTH_BIOMETRIC_STRONG)
+            .setIsStrongBoxBacked(strongBox)
         return KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, PROVIDER).apply {
             init(builder.build())
         }.generateKey()

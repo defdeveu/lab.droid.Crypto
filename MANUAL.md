@@ -8,7 +8,7 @@ between.
 - Android Studio Rabbit (2026.2) or newer, with Android SDK platform 37 and
   build-tools 37.0.0
 - JDK 17 or newer; Android Studio's bundled JBR works
-- A device or emulator running Android 7.0 (API 24) or newer
+- A device or emulator running Android 11 (API 30) or newer
 - Flow 5 needs a device screen lock and an enrolled strong biometric. The
   other implemented cases can run without biometric setup. See below if setup
   is already present or is completed after first opening the app.

@@ -2,7 +2,6 @@ package defdev.labdroid.crypto.flows.keystore
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.security.keystore.StrongBoxUnavailableException
@@ -68,9 +67,7 @@ class KeystoreKey(private val context: Context) {
     }
 
     private fun createKey(store: KeyStore): SecretKey {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
-            context.packageManager.hasSystemFeature(PackageManager.FEATURE_STRONGBOX_KEYSTORE)
-        ) {
+        if (context.packageManager.hasSystemFeature(PackageManager.FEATURE_STRONGBOX_KEYSTORE)) {
             try {
                 return generate(strongBox = true)
             } catch (_: StrongBoxUnavailableException) {
@@ -89,9 +86,7 @@ class KeystoreKey(private val context: Context) {
             .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
             .setRandomizedEncryptionRequired(true)
             .setUserAuthenticationRequired(false)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            builder.setIsStrongBoxBacked(strongBox)
-        }
+            .setIsStrongBoxBacked(strongBox)
         return KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, PROVIDER).apply {
             init(builder.build())
         }.generateKey()

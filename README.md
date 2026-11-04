@@ -8,7 +8,9 @@ encrypts and decrypts a message through numbered exercise cases.
 - Android Studio Rabbit (2026.2) or newer
 - JDK 17 or newer (Android Studio's bundled JBR works)
 - Android SDK platform 37 and build-tools 37.0.0
-- A device or emulator running Android 7.0 (API 24) or newer
+- A device or emulator running Android 11 (API 30) or newer
+
+The app targets Android 15 (API 35).
 
 ## Build and install
 
@@ -35,3 +37,8 @@ Or open the project in Android Studio and run the `app` configuration.
 The unit tests cover the encryption services, hexadecimal codec, operation
 state and authentication request handling. Instrumented Compose tests live under `app/src/androidTest` and
 need a running device or emulator.
+
+## Font licenses
+
+Bundled Noto variable fonts and their SIL Open Font License notices are listed
+in `app/src/main/assets/licenses/fonts.txt`.

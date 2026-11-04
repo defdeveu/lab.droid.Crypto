@@ -34,12 +34,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import defdev.labdroid.crypto.R
 import defdev.labdroid.crypto.error.CryptoError
+import defdev.labdroid.crypto.theme.LabMono
+import defdev.labdroid.crypto.theme.LabTitle
 
 @Composable
 fun LabHeader(title: String) {
@@ -48,6 +49,7 @@ fun LabHeader(title: String) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMediumEmphasized.copy(
+                    fontFamily = LabTitle,
                     fontSize = 19.sp,
                     lineHeight = 26.sp,
                     fontWeight = FontWeight(875),
@@ -104,7 +106,7 @@ fun MessageField(
         },
         placeholder = { Text(text = placeholder) },
         minLines = minLines,
-        textStyle = MaterialTheme.typography.bodyLarge.copy(fontFamily = FontFamily.Monospace),
+        textStyle = MaterialTheme.typography.bodyLarge.copy(fontFamily = LabMono),
         shape = MaterialTheme.shapes.large,
     )
 }
@@ -124,7 +126,7 @@ fun OutputField(title: String, text: String, placeholder: String) {
             SelectionContainer {
                 Text(
                     text = text.ifEmpty { placeholder },
-                    style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                    style = MaterialTheme.typography.bodyMedium.copy(fontFamily = LabMono),
                     color = if (text.isEmpty()) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.fillMaxWidth(),
                 )
