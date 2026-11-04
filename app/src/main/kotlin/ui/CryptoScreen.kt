@@ -104,7 +104,9 @@ fun CryptoScreen(
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
-                            if (selectedFlow == FlowId.BIOMETRIC && state.operation == null && state.error != null) {
+                            if (state.configurationError != null ||
+                                (selectedFlow == FlowId.BIOMETRIC && state.operation == null && state.error != null)
+                            ) {
                                 OperationFeedback(isRunning = false, error = state.error)
                             }
                         }
@@ -125,6 +127,7 @@ fun CryptoScreen(
                                 onClick = viewModel::encrypt,
                                 isRunning = state.isRunning,
                                 showShield = true,
+                                enabled = state.configurationError == null,
                             )
                             if (state.operation == CryptoOperation.ENCRYPT) {
                                 OperationFeedback(isRunning = state.isRunning, error = state.error)
@@ -146,6 +149,7 @@ fun CryptoScreen(
                                 ),
                                 onClick = viewModel::decrypt,
                                 isRunning = state.isRunning,
+                                enabled = state.configurationError == null,
                             )
                             if (state.operation == CryptoOperation.DECRYPT) {
                                 OperationFeedback(isRunning = state.isRunning, error = state.error)
@@ -159,11 +163,12 @@ fun CryptoScreen(
                         OutputField(
                             title = stringResource(R.string.section_key),
                             text = when (selectedFlow) {
-                                FlowId.HARDCODED, FlowId.RESOURCE -> state.keyValue
-                                FlowId.HTTPS -> stringResource(R.string.key_not_fetched)
+                                FlowId.HARDCODED, FlowId.RESOURCE, FlowId.HTTPS -> state.keyValue
                                 FlowId.KEYSTORE, FlowId.BIOMETRIC -> protectedKeyText(state.keySecurity, state.error)
                             },
-                            placeholder = stringResource(R.string.key_not_available),
+                            placeholder = stringResource(
+                                if (selectedFlow == FlowId.HTTPS) R.string.key_not_fetched else R.string.key_not_available,
+                            ),
                         )
                     }
                 }
@@ -221,6 +226,8 @@ internal fun CryptoError.messageRes(): Int = when (this) {
     CryptoError.EMPTY_INPUT -> R.string.error_empty_input
     CryptoError.INVALID_HEX -> R.string.error_invalid_hex
     CryptoError.KEY_UNAVAILABLE -> R.string.error_key_unavailable
+    CryptoError.KEY_DOWNLOAD_FAILED -> R.string.error_key_download_failed
+    CryptoError.INVALID_ENDPOINT -> R.string.error_invalid_endpoint
     CryptoError.OPERATION_FAILED -> R.string.error_operation_failed
     CryptoError.NOT_IMPLEMENTED -> R.string.operation_not_implemented
     CryptoError.BIOMETRIC_NOT_ENROLLED -> R.string.error_biometric_not_enrolled

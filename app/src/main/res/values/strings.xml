@@ -49,5 +49,7 @@
     <string name="error_empty_input">Enter a message first.</string>
     <string name="error_invalid_hex">The ciphertext is not valid hexadecimal.</string>
     <string name="error_key_unavailable">The encryption key is unavailable.</string>
+    <string name="error_key_download_failed">The encryption key could not be downloaded.</string>
+    <string name="error_invalid_endpoint">Configuration error: use a valid HTTPS endpoint.</string>
     <string name="error_operation_failed">The operation failed.</string>
 </resources>

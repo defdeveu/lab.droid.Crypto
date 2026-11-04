@@ -28,13 +28,17 @@ data class CryptoUiState(
     val isRunning: Boolean = false,
     val operation: CryptoOperation? = null,
     val error: CryptoError? = null,
+    val configurationError: CryptoError? = null,
 )
 
 class CryptoViewModel(
     private val crypto: CryptoService?,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val configurationError: CryptoError? = null,
 ) : ViewModel() {
-    private val mutableUiState = MutableStateFlow(CryptoUiState(keyValue = readKeyValue()))
+    private val mutableUiState = MutableStateFlow(
+        CryptoUiState(keyValue = readKeyValue(), error = configurationError, configurationError = configurationError),
+    )
 
     val uiState: StateFlow<CryptoUiState> = mutableUiState.asStateFlow()
 
@@ -65,7 +69,7 @@ class CryptoViewModel(
     }
 
     fun encrypt() {
-        if (mutableUiState.value.isRunning) {
+        if (mutableUiState.value.isRunning || configurationError != null) {
             return
         }
         val service = crypto
@@ -92,6 +96,7 @@ class CryptoViewModel(
                     it.copy(
                         isRunning = false,
                         error = failure.reason,
+                        keyValue = readKeyValue(),
                         ciphertext = when (failure.reason) {
                             CryptoError.OPERATION_FAILED, CryptoError.INVALID_HEX, CryptoError.EMPTY_INPUT -> ""
                             else -> it.ciphertext
@@ -103,7 +108,7 @@ class CryptoViewModel(
     }
 
     fun decrypt() {
-        if (mutableUiState.value.isRunning) {
+        if (mutableUiState.value.isRunning || configurationError != null) {
             return
         }
         val service = crypto
@@ -123,7 +128,7 @@ class CryptoViewModel(
                 mutableUiState.update { it.copy(isRunning = false, decrypted = plaintext, keyValue = readKeyValue()) }
             } catch (failure: CryptoFailure) {
                 mutableUiState.update {
-                    it.copy(isRunning = false, error = failure.reason, decrypted = "")
+                    it.copy(isRunning = false, error = failure.reason, decrypted = "", keyValue = readKeyValue())
                 }
             }
         }

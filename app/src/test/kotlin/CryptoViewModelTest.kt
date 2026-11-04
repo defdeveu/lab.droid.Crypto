@@ -211,6 +211,59 @@ class CryptoViewModelTest {
         assertFalse(viewModel.uiState.value.isRunning)
     }
 
+    @Test
+    fun aDownloadFailureClearsTheDisplayedKeyAndPreservesTheFields() = runTest(dispatcher) {
+        val service = FakeCryptoService().apply { keyValue = "previous" }
+        val viewModel = CryptoViewModel(service, dispatcher)
+        viewModel.onPlaintextChange("hello")
+        viewModel.onCiphertextChange("0011")
+
+        service.keyValue = null
+        service.failure = CryptoError.KEY_DOWNLOAD_FAILED
+        viewModel.encrypt()
+        advanceUntilIdle()
+
+        assertEquals("", viewModel.uiState.value.keyValue)
+        assertEquals("hello", viewModel.uiState.value.plaintext)
+        assertEquals("0011", viewModel.uiState.value.ciphertext)
+        assertEquals(CryptoError.KEY_DOWNLOAD_FAILED, viewModel.uiState.value.error)
+        assertFalse(viewModel.uiState.value.isRunning)
+
+        service.failure = null
+        service.keyValue = "current"
+        viewModel.encrypt()
+        advanceUntilIdle()
+        assertEquals("current", viewModel.uiState.value.keyValue)
+
+        service.failure = CryptoError.KEY_DOWNLOAD_FAILED
+        service.keyValue = null
+        viewModel.decrypt()
+        advanceUntilIdle()
+
+        assertEquals("", viewModel.uiState.value.keyValue)
+        assertEquals("enc:hello", viewModel.uiState.value.ciphertext)
+        assertEquals("", viewModel.uiState.value.decrypted)
+        assertEquals(CryptoError.KEY_DOWNLOAD_FAILED, viewModel.uiState.value.error)
+    }
+
+    @Test
+    fun aConfigurationFailurePreventsOperations() = runTest(dispatcher) {
+        val service = FakeCryptoService()
+        val viewModel = CryptoViewModel(service, dispatcher, CryptoError.INVALID_ENDPOINT)
+        viewModel.onPlaintextChange("hello")
+        viewModel.onCiphertextChange("0011")
+
+        viewModel.encrypt()
+        viewModel.decrypt()
+        advanceUntilIdle()
+
+        assertEquals(0, service.encryptCalls)
+        assertEquals(CryptoError.INVALID_ENDPOINT, viewModel.uiState.value.configurationError)
+        assertEquals(CryptoError.INVALID_ENDPOINT, viewModel.uiState.value.error)
+        assertEquals("0011", viewModel.uiState.value.ciphertext)
+        assertFalse(viewModel.uiState.value.isRunning)
+    }
+
     private class FakeCryptoService(var failure: CryptoError? = null) : CryptoService {
         override var keyValue: String? = null
 

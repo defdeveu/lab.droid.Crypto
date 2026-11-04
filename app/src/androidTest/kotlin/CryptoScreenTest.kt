@@ -42,11 +42,11 @@ class CryptoScreenTest {
     }
 
     @Test
-    fun httpsCaseReportsNotImplemented() {
+    fun httpsCaseRequiresAMessage() {
         composeRule.onNodeWithText("3").performClick()
         composeRule.onNodeWithText(text(R.string.flow_https_title)).assertIsDisplayed()
         composeRule.onNodeWithText(text(R.string.action_encrypt)).performClick()
-        composeRule.onNodeWithText(text(R.string.operation_not_implemented)).assertIsDisplayed()
+        composeRule.onNodeWithText(text(R.string.error_empty_input)).assertIsDisplayed()
     }
 
     @Test

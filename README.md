@@ -11,6 +11,8 @@ encrypts and decrypts a message through numbered exercise cases.
 - A device or emulator running Android 11 (API 30) or newer
 
 The app targets Android 15 (API 35).
+Case 3 requires an internet connection. The hosted endpoint is configured by
+default; optional endpoint setup is described in [MANUAL.md](MANUAL.md).
 
 ## Build and install
 

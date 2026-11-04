@@ -26,6 +26,16 @@ Launch **Crypto Lab**. Select the exercise using the numbered rail on the left.
 Enter a message, press **Encrypt**, then press **Decrypt** to display the result.
 Follow the instructor's directions for the exercise.
 
+## Network setup
+
+Case 3 requires internet access. The app uses its hosted endpoint by default.
+If the instructor supplies another endpoint, copy
+`lab.local.properties.example` to `lab.local.properties` and set `lab.endpoint`
+to that HTTPS URL. Sync the Gradle project, then rebuild and reinstall. This
+file is local and ignored by Git; remove it and rebuild to restore the default.
+An invalid endpoint shows a configuration error and disables that case's
+operations. The other cases remain available.
+
 ## Flow 5: biometric setup and use
 
 Flow 5 uses Android's **strong biometric (Class 3)** capability. An existing

@@ -165,12 +165,13 @@ fun PrimaryAction(
     label: String,
     onClick: () -> Unit,
     isRunning: Boolean,
-    showShield: Boolean = false
+    showShield: Boolean = false,
+    enabled: Boolean = true,
 ) {
     val height = 56.dp
     Button(
         onClick = onClick,
-        enabled = !isRunning,
+        enabled = enabled && !isRunning,
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = height),

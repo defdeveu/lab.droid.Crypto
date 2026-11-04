@@ -1,7 +1,20 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
 }
+
+val defaultEndpoint = "https://zsk.labs.def.dev/crypto/key"
+val labEndpoint = rootProject.file("lab.local.properties")
+    .takeIf { it.exists() }
+    ?.let { file ->
+        Properties().apply { file.inputStream().use { stream -> load(stream) } }
+            .getProperty("lab.endpoint")
+    }
+    ?: defaultEndpoint
+val endpointLiteral = "\"" + labEndpoint.replace("\\", "\\\\").replace("\"", "\\\"")
+    .replace("\n", "\\n").replace("\r", "\\r") + "\""
 
 android {
     namespace = "defdev.labdroid.crypto"
@@ -14,6 +27,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "LAB_ENDPOINT", endpointLiteral)
     }
 
     buildTypes {
@@ -30,6 +44,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -55,6 +70,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.okhttp)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 
