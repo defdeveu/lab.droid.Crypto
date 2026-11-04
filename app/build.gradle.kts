@@ -5,14 +5,12 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-val defaultEndpoint = "https://zsk.labs.def.dev/crypto/key"
-val labEndpoint = rootProject.file("lab.local.properties")
-    .takeIf { it.exists() }
-    ?.let { file ->
-        Properties().apply { file.inputStream().use { stream -> load(stream) } }
-            .getProperty("lab.endpoint")
-    }
-    ?: defaultEndpoint
+val labProperties = Properties().apply {
+    rootProject.file("lab.properties").inputStream().use { load(it) }
+    rootProject.file("lab.local.properties").takeIf { it.exists() }
+        ?.inputStream()?.use { load(it) }
+}
+val labEndpoint = labProperties.getProperty("lab.endpoint").orEmpty()
 val endpointLiteral = "\"" + labEndpoint.replace("\\", "\\\\").replace("\"", "\\\"")
     .replace("\n", "\\n").replace("\r", "\\r") + "\""
 

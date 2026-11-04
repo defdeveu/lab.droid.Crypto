@@ -28,13 +28,18 @@ Follow the instructor's directions for the exercise.
 
 ## Network setup
 
-Case 3 requires internet access. The app uses its hosted endpoint by default.
-If the instructor supplies another endpoint, copy
-`lab.local.properties.example` to `lab.local.properties` and set `lab.endpoint`
-to that HTTPS URL. Sync the Gradle project, then rebuild and reinstall. This
-file is local and ignored by Git; remove it and rebuild to restore the default.
-An invalid endpoint shows a configuration error and disables that case's
-operations. The other cases remain available.
+Case 3 requires internet access for every Encrypt and Decrypt operation.
+The supplied `lab.properties` already configures the course server. Build and
+run the app as above; no endpoint setup or local configuration file is needed.
+
+### Alternative server (exceptional instructor setup)
+
+Only if the instructor explicitly supplies a different server, create
+`lab.local.properties` containing `lab.endpoint=THE_HTTPS_URL`. Sync the Gradle
+project, rebuild and reinstall. This ignored file overrides `lab.properties`;
+remove it and rebuild to return to the supplied course configuration. An
+invalid endpoint shows a configuration error and disables case 3's operations.
+The other cases remain available.
 
 ## Flow 5: biometric setup and use
 
