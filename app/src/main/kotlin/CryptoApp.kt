@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto
+package defdev.labs.droid.crypto
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -6,9 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import defdev.labdroid.crypto.flows.FlowId
-import defdev.labdroid.crypto.ui.CryptoScreen
-import defdev.labdroid.crypto.ui.BiometricPromptHost
+import defdev.labs.droid.crypto.flows.FlowId
+import defdev.labs.droid.crypto.ui.CryptoScreen
+import defdev.labs.droid.crypto.ui.BiometricPromptHost
 
 @Composable
 fun CryptoApp(container: AppContainer) {

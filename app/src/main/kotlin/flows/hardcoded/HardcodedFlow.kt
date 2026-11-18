@@ -1,7 +1,7 @@
-package defdev.labdroid.crypto.flows.hardcoded
+package defdev.labs.droid.crypto.flows.hardcoded
 
-import defdev.labdroid.crypto.crypto.AesEcbCipher
-import defdev.labdroid.crypto.crypto.CryptoService
+import defdev.labs.droid.crypto.crypto.AesEcbCipher
+import defdev.labs.droid.crypto.crypto.CryptoService
 import javax.crypto.spec.SecretKeySpec
 
 class HardcodedFlow : CryptoService {

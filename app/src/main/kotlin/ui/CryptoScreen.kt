@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto.ui
+package defdev.labs.droid.crypto.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -31,12 +31,12 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import defdev.labdroid.crypto.CryptoOperation
-import defdev.labdroid.crypto.CryptoViewModel
-import defdev.labdroid.crypto.R
-import defdev.labdroid.crypto.error.CryptoError
-import defdev.labdroid.crypto.crypto.KeySecurity
-import defdev.labdroid.crypto.flows.FlowId
+import defdev.labs.droid.crypto.CryptoOperation
+import defdev.labs.droid.crypto.CryptoViewModel
+import defdev.labs.droid.crypto.R
+import defdev.labs.droid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.crypto.KeySecurity
+import defdev.labs.droid.crypto.flows.FlowId
 
 @Composable
 fun CryptoScreen(

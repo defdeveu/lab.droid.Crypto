@@ -1,8 +1,8 @@
-package defdev.labdroid.crypto.flows.https
+package defdev.labs.droid.crypto.flows.https
 
-import defdev.labdroid.crypto.BuildConfig
-import defdev.labdroid.crypto.error.CryptoError
-import defdev.labdroid.crypto.error.CryptoFailure
+import defdev.labs.droid.crypto.BuildConfig
+import defdev.labs.droid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.error.CryptoFailure
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit

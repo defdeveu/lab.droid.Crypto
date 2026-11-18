@@ -1,11 +1,11 @@
-package defdev.labdroid.crypto.theme
+package defdev.labs.droid.crypto.theme
 
 import androidx.annotation.FontRes
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
-import defdev.labdroid.crypto.R
+import defdev.labs.droid.crypto.R
 
 val LabSans = variableFontFamily(R.font.noto_sans_variable, 400, 500, 700)
 val LabMono = variableFontFamily(R.font.noto_sans_mono_variable, 400)

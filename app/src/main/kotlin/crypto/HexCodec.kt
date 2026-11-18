@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto.crypto
+package defdev.labs.droid.crypto.crypto
 
 object HexCodec {
     private const val DIGITS = "0123456789abcdef"

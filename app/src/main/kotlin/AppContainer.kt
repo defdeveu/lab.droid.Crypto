@@ -1,18 +1,18 @@
-package defdev.labdroid.crypto
+package defdev.labs.droid.crypto
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import defdev.labdroid.crypto.crypto.CryptoService
-import defdev.labdroid.crypto.flows.FlowId
-import defdev.labdroid.crypto.flows.biometric.BiometricAuthorizer
-import defdev.labdroid.crypto.flows.biometric.BiometricFlow
-import defdev.labdroid.crypto.flows.hardcoded.HardcodedFlow
-import defdev.labdroid.crypto.flows.https.HttpsFlow
-import defdev.labdroid.crypto.flows.keystore.KeystoreFlow
-import defdev.labdroid.crypto.flows.resource.ResourceFlow
-import defdev.labdroid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.crypto.CryptoService
+import defdev.labs.droid.crypto.flows.FlowId
+import defdev.labs.droid.crypto.flows.biometric.BiometricAuthorizer
+import defdev.labs.droid.crypto.flows.biometric.BiometricFlow
+import defdev.labs.droid.crypto.flows.hardcoded.HardcodedFlow
+import defdev.labs.droid.crypto.flows.https.HttpsFlow
+import defdev.labs.droid.crypto.flows.keystore.KeystoreFlow
+import defdev.labs.droid.crypto.flows.resource.ResourceFlow
+import defdev.labs.droid.crypto.error.CryptoError
 import kotlinx.coroutines.CoroutineScope
 
 class AppContainer(context: Context, scope: CoroutineScope) {

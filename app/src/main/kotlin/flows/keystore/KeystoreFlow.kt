@@ -1,10 +1,10 @@
-package defdev.labdroid.crypto.flows.keystore
+package defdev.labs.droid.crypto.flows.keystore
 
 import android.content.Context
-import defdev.labdroid.crypto.crypto.AesGcmCipher
-import defdev.labdroid.crypto.crypto.CryptoService
-import defdev.labdroid.crypto.crypto.KeySecurity
-import defdev.labdroid.crypto.error.CryptoFailure
+import defdev.labs.droid.crypto.crypto.AesGcmCipher
+import defdev.labs.droid.crypto.crypto.CryptoService
+import defdev.labs.droid.crypto.crypto.KeySecurity
+import defdev.labs.droid.crypto.error.CryptoFailure
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 

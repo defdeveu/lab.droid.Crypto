@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto.ui
+package defdev.labs.droid.crypto.ui
 
 import androidx.activity.compose.LocalActivity
 import androidx.biometric.AuthenticationRequest
@@ -14,10 +14,10 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import defdev.labdroid.crypto.R
-import defdev.labdroid.crypto.error.CryptoError
-import defdev.labdroid.crypto.flows.biometric.BiometricAction
-import defdev.labdroid.crypto.flows.biometric.BiometricAuthorizer
+import defdev.labs.droid.crypto.R
+import defdev.labs.droid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.flows.biometric.BiometricAction
+import defdev.labs.droid.crypto.flows.biometric.BiometricAuthorizer
 
 @Composable
 fun BiometricPromptHost(authorizer: BiometricAuthorizer) {

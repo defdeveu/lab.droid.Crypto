@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto.flows.https
+package defdev.labs.droid.crypto.flows.https
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull

@@ -5,12 +5,14 @@ encrypts and decrypts a message through numbered exercise cases.
 
 ## Requirements
 
-- Android Studio Rabbit (2026.2) or newer
-- JDK 17 or newer (Android Studio's bundled JBR works)
+- Android Studio Rabbit 2 (2026.2.2) or newer
+- Android Studio's bundled JetBrains Runtime 25; no separate JDK installation required
 - Android SDK platform 37 and build-tools 37.0.0
 - A device or emulator running Android 11 (API 30) or newer
 
-The app targets Android 15 (API 35).
+The app targets Android 17 (API 37). Gradle uses the daemon JVM criteria in
+`gradle/gradle-daemon-jvm.properties`; Java/Kotlin compilation targets Java 25,
+with Kotlin 2.4.21.
 Case 3 requires internet access for every Encrypt and Decrypt operation.
 The course server is configured in the supplied `lab.properties`; no local
 configuration file or endpoint setup is needed.

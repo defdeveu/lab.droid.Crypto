@@ -1,6 +1,6 @@
 [versions]
-agp = "9.5.0"
-kotlin = "2.4.20"
+agp = "9.5.1"
+kotlin = "2.4.21"
 composeBom = "2026.09.00"
 material3 = "1.5.0-beta02"
 coreKtx = "1.19.0"
@@ -13,6 +13,7 @@ biometric = "1.4.0-alpha07"
 okhttp = "5.5.1"
 
 [libraries]
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 androidx-biometric-compose = { group = "androidx.biometric", name = "biometric-compose", version.ref = "biometric" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }

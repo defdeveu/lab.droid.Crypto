@@ -1,11 +1,11 @@
-package defdev.labdroid.crypto.flows.resource
+package defdev.labs.droid.crypto.flows.resource
 
 import android.content.res.Resources
-import defdev.labdroid.crypto.R
-import defdev.labdroid.crypto.crypto.AesEcbCipher
-import defdev.labdroid.crypto.crypto.CryptoService
-import defdev.labdroid.crypto.error.CryptoError
-import defdev.labdroid.crypto.error.CryptoFailure
+import defdev.labs.droid.crypto.R
+import defdev.labs.droid.crypto.crypto.AesEcbCipher
+import defdev.labs.droid.crypto.crypto.CryptoService
+import defdev.labs.droid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.error.CryptoFailure
 import java.io.IOException
 import javax.crypto.spec.SecretKeySpec
 

@@ -1,9 +1,9 @@
-package defdev.labdroid.crypto.flows.https
+package defdev.labs.droid.crypto.flows.https
 
-import defdev.labdroid.crypto.crypto.AesEcbCipher
-import defdev.labdroid.crypto.crypto.CryptoService
-import defdev.labdroid.crypto.error.CryptoError
-import defdev.labdroid.crypto.error.CryptoFailure
+import defdev.labs.droid.crypto.crypto.AesEcbCipher
+import defdev.labs.droid.crypto.crypto.CryptoService
+import defdev.labs.droid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.error.CryptoFailure
 import java.io.IOException
 import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec

@@ -1,7 +1,7 @@
-package defdev.labdroid.crypto.flows.biometric
+package defdev.labs.droid.crypto.flows.biometric
 
-import defdev.labdroid.crypto.error.CryptoError
-import defdev.labdroid.crypto.error.CryptoFailure
+import defdev.labs.droid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.error.CryptoFailure
 import javax.crypto.Cipher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async

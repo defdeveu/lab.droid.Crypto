@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto.error
+package defdev.labs.droid.crypto.error
 
 enum class CryptoError {
     EMPTY_INPUT,

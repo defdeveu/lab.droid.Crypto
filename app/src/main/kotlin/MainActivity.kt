@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto
+package defdev.labs.droid.crypto
 
 import android.os.Bundle
 import android.graphics.Color
@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import defdev.labdroid.crypto.theme.CryptoLabTheme
+import defdev.labs.droid.crypto.theme.CryptoLabTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

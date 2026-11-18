@@ -1,11 +1,11 @@
-package defdev.labdroid.crypto
+package defdev.labs.droid.crypto
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import defdev.labdroid.crypto.crypto.CryptoService
-import defdev.labdroid.crypto.crypto.KeySecurity
-import defdev.labdroid.crypto.error.CryptoError
-import defdev.labdroid.crypto.error.CryptoFailure
+import defdev.labs.droid.crypto.crypto.CryptoService
+import defdev.labs.droid.crypto.crypto.KeySecurity
+import defdev.labs.droid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.error.CryptoFailure
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

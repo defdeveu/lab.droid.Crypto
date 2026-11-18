@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto.crypto
+package defdev.labs.droid.crypto.crypto
 
 enum class KeySecurity {
     SOFTWARE,

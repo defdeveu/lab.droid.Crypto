@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto.crypto
+package defdev.labs.droid.crypto.crypto
 
 import android.os.Build
 import android.security.keystore.KeyInfo

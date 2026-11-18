@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto.flows
+package defdev.labs.droid.crypto.flows
 
 enum class FlowId(val value: String) {
     HARDCODED("hardcoded"),

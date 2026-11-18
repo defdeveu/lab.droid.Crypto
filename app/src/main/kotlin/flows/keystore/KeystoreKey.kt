@@ -1,14 +1,14 @@
-package defdev.labdroid.crypto.flows.keystore
+package defdev.labs.droid.crypto.flows.keystore
 
 import android.content.Context
 import android.content.pm.PackageManager
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.security.keystore.StrongBoxUnavailableException
-import defdev.labdroid.crypto.crypto.KeySecurity
-import defdev.labdroid.crypto.crypto.KeystoreMetadata
-import defdev.labdroid.crypto.error.CryptoError
-import defdev.labdroid.crypto.error.CryptoFailure
+import defdev.labs.droid.crypto.crypto.KeySecurity
+import defdev.labs.droid.crypto.crypto.KeystoreMetadata
+import defdev.labs.droid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.error.CryptoFailure
 import java.io.IOException
 import java.security.GeneralSecurityException
 import java.security.KeyStore
@@ -109,7 +109,7 @@ class KeystoreKey(private val context: Context) {
 
     companion object {
         private const val PROVIDER = "AndroidKeyStore"
-        private const val ALIAS = "defdev.labdroid.crypto.keystore.gcm.v1"
+        private const val ALIAS = "defdev.labs.droid.crypto.keystore.gcm.v1"
         private const val PROVISIONED = "flow4.provisioned"
         private const val PURPOSES = KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
         private val lock = Any()

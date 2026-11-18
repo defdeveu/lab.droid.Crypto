@@ -1,8 +1,8 @@
-package defdev.labdroid.crypto
+package defdev.labs.droid.crypto
 
-import defdev.labdroid.crypto.error.CryptoError
-import defdev.labdroid.crypto.error.CryptoFailure
-import defdev.labdroid.crypto.crypto.CryptoService
+import defdev.labs.droid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.error.CryptoFailure
+import defdev.labs.droid.crypto.crypto.CryptoService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher

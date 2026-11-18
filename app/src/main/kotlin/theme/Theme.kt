@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto.theme
+package defdev.labs.droid.crypto.theme
 
 import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.MotionScheme

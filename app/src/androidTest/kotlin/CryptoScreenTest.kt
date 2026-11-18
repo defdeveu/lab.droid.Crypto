@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto
+package defdev.labs.droid.crypto
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.semantics.SemanticsProperties

@@ -5,13 +5,23 @@ between.
 
 ## Prerequisites
 
-- Android Studio Rabbit (2026.2) or newer, with Android SDK platform 37 and
+- Android Studio Rabbit 2 (2026.2.2) or newer, with Android SDK platform 37 and
   build-tools 37.0.0
-- JDK 17 or newer; Android Studio's bundled JBR works
+- JetBrains Runtime 25 from Android Studio's bundled JBR, selected through
+  `gradle/gradle-daemon-jvm.properties`; no separate JDK installation needed
 - A device or emulator running Android 11 (API 30) or newer
 - Flow 5 needs a device screen lock and an enrolled strong biometric. The
   other implemented cases can run without biometric setup. See below if setup
   is already present or is completed after first opening the app.
+
+The app targets and compiles against Android 17 (API 37), with Java/Kotlin
+compilation target 25. For a shell build, select your installed bundled JBR
+through `JAVA_HOME` if needed.
+
+For Android Studio Quail 4, change only your local checkout's `agp` value in
+`gradle/libs.versions.toml` from `9.5.1` to `9.4.1` before sync, and use
+JetBrains Runtime 25. Leave that compatibility edit uncommitted. The default
+AGP 9.5.1 configuration requires Rabbit 2 or newer.
 
 ## Build and install
 
@@ -90,8 +100,8 @@ This step does not clear app storage.
 Alternatively, with the device connected through ADB:
 
 ```sh
-adb shell am force-stop defdev.labdroid.crypto
-adb shell am start -n defdev.labdroid.crypto/.MainActivity
+adb shell am force-stop defdev.labs.droid.crypto
+adb shell am start -n defdev.labs.droid.crypto/.MainActivity
 ```
 
 With multiple devices, select the intended one using `adb -s SERIAL` for each

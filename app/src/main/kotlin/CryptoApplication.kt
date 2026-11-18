@@ -1,4 +1,4 @@
-package defdev.labdroid.crypto
+package defdev.labs.droid.crypto
 
 import android.app.Application
 import kotlinx.coroutines.CoroutineScope

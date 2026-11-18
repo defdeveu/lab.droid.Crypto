@@ -1,7 +1,7 @@
-package defdev.labdroid.crypto.crypto
+package defdev.labs.droid.crypto.crypto
 
-import defdev.labdroid.crypto.error.CryptoError
-import defdev.labdroid.crypto.error.CryptoFailure
+import defdev.labs.droid.crypto.error.CryptoError
+import defdev.labs.droid.crypto.error.CryptoFailure
 import java.security.GeneralSecurityException
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
